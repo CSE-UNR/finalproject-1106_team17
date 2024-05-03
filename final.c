@@ -51,7 +51,26 @@ int main() {
 	}
 	
 	void load_image() {
-		printf("this is where we load image\n\n");
+		char filename[100];
+		printf("What is the photo files name?\n\n");
+		scanf("%s",filename);
+		
+		FILE *file = fopen(filename, "r");
+		if (file == NULL){
+			printf("Unable to open image");
+			return;
+		}
+		
+		fscanf(file,"%d %d", &rows, &cols);
+		for(int i =0; i<rows; i++){
+			for(int j=0; j<cols; j++){
+				fscanf(file,"%hhd", &image[i][j]);
+			}
+		}
+		
+		fclose(file);
+		printf("Image has been loaded");
+		
 	}
 	
 	void display_image() {
@@ -64,6 +83,7 @@ int main() {
 		printf("1: Crop Image \n");
 		printf("2: Dim image \n");
 		printf("3: Brighten image\n");
+		printf("4: Save image\n");
 		printf("0: Return to main menu\n\n");
 		printf("Choose from one of the options above: ");
 		scanf("%d", &choice);
@@ -77,6 +97,9 @@ int main() {
 				break;
 			case 3: 
 				brighten_image();
+				break;
+			case 4: 
+				save_image();
 				break;
 			case 0:
 				return;
@@ -98,4 +121,30 @@ int main() {
 	void brighten_image() {
 		printf("brightening image\n\n");
 		}
+	void save_image(){
+	char filename[100];
+	printf("Enter filename of photo to save.");
+	scanf("%s", filename);
+	
+	FILE *file = fopen(filename, "w");
+		if (file == NULL){
+			printf("Unable to save image");
+			return;
+		}
+		
+		fprintf(file,"%d %d\n", rows, cols);
+		for(int i =0; i<rows; i++){
+			for(int j=0; j<cols; j++){
+				fprintf(file,"%d", image[i][j]);
+			}
+			fprintf(file,"\n");
+		}
+		
+		fclose(file);
+		printf("Image has been saved");
+	
+	}
+	
+	
+	
 	
