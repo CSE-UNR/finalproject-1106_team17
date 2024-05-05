@@ -6,7 +6,7 @@
 
 #define MAX_SIZE 100
 
-char image[MAX_SIZE][MAX_SIZE];
+int image[MAX_SIZE][MAX_SIZE];
 int rows, cols;
 
 void load_image();
@@ -53,6 +53,7 @@ int main() {
 	void load_image() {
 		char filename[100];
 		printf("What is the photo files name?\n\n");
+		printf("Put the name here: ");
 		scanf("%s",filename);
 		
 		FILE *file = fopen(filename, "r");
@@ -64,18 +65,23 @@ int main() {
 		fscanf(file,"%d %d", &rows, &cols);
 		for(int i =0; i<rows; i++){
 			for(int j=0; j<cols; j++){
-				fscanf(file,"%hhd", &image[i][j]);
+				fscanf(file,"%d", &image[i][j]);
 			}
 		}
 		
 		fclose(file);
-		printf("Image has been loaded");
+		printf("Image has been loaded\n");
 		
 	}
 	
 	void display_image() {
-		printf("this is where we display image\n\n");
+		printf("Displaying Image!\n");
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < cols; j++){
+			printf("%ls", &image[i][j]);
+			}
 		}
+	}
 	void edit_image() {
 		int choice; 
 		do {
