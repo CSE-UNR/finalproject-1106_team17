@@ -121,12 +121,24 @@ int main() {
 		}
 		
 	void dim_image() {
-		printf("dimming image\n\n");
+		for (int i = 0; i < rows; i++){
+			for(int j = 0; j < cols; j++){
+				if(image[i][j] < '0'){
+				image[i][j]--;
+				}
+			}
 		}
+	}
 		
 	void brighten_image() {
-		printf("brightening image\n\n");
+		for (int i = 0; i < rows; i++){
+			for(int j = 0; j < cols; j++){
+				if(image[i][j] < '4'){
+				image[i][j]++;
+				}
+			}
 		}
+	}
 	void save_image(){
 	char filename[100];
 	printf("Enter filename of photo to save.");
