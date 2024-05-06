@@ -75,6 +75,12 @@ int main() {
 	}
 	
 	void display_image() {
+		char filename[100];
+		FILE *file = fopen(filename, "r");
+		if (file == NULL){
+			printf("Unable to open image\n");
+			return;
+		}
 		printf("Displaying Image!\n");
 		for(int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++){
@@ -123,7 +129,7 @@ int main() {
 	void dim_image() {
 		for (int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++){
-				if(image[i][j] < '0'){
+				if(image[i][j] < 0){
 				image[i][j]--;
 				}
 			}
@@ -133,7 +139,7 @@ int main() {
 	void brighten_image() {
 		for (int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++){
-				if(image[i][j] < '4'){
+				if(image[i][j] < 4){
 				image[i][j]++;
 				}
 			}
