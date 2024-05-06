@@ -75,16 +75,12 @@ int main() {
 	}
 	
 	void display_image() {
-		char filename[100];
-		FILE *file = fopen(filename, "r");
-		if (file == NULL){
-			printf("Unable to open image\n");
-			return;
-		}
+	
 		printf("Displaying Image!\n");
+		fscanf(file, "%ls %ls", &rows, &cols);
 		for(int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++){
-			printf("%ls", &image[i][j]);
+				printf(file,"%ls", &image[i][j]);
 			}
 		}
 	}
