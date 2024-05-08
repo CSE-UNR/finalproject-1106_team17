@@ -65,7 +65,6 @@ int main() {
 		}
 		else{
 			*rows = *cols = 0; 
-	    		
 	    		int row = 0, col = 0, maxc = 0;
 
 	   		while (fscanf(file,"%c", &image[row][col]) == 1){
@@ -96,19 +95,19 @@ int main() {
 		for(int i = 0; i < *rows; i++){
 			for(int j = 0; j < *cols; j++){
 				switch (image[i][j]){
-					case 0:
+					case '0':
 						printf(" ");
 						break;
-					case 1:
+					case '1':
 						printf(".");
 						break;
-					case 2:
+					case '2':
 						printf("o");
 						break;
-					case 3:
+					case '3':
 						printf("O");
 						break;
-					case 4:
+					case '4':
 						printf("0");
 						break;
 					default:
