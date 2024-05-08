@@ -3,14 +3,16 @@
 //Purpose: Final project: Image processing
 
 #include <stdio.h>
+#include <stdbool.h>
 
-#define MAX_SIZE 100
 
-int image[MAX_SIZE][MAX_SIZE];
+#define MAX_SIZE 1000
+
+char image[MAX_SIZE][MAX_SIZE];
 int rows, cols;
 
-void load_image();
-void display_image();
+void load_image(char filename[], char image[][MAX_SIZE], int *rows, int *cols);
+void display_image(char image[][MAX_SIZE], int *rows, int *cols);
 void crop_image();
 void dim_image();
 void brighten_image();
@@ -19,8 +21,9 @@ void edit_image();
 
 int main() {
 	int choice; 
-	
-	do {
+	char filename[100];
+
+	do{
 		printf("**ERINSTAGRAM**\n"); //umm idk if she wants us to change the menu name
 		printf("1: Load image \n");
 		printf("2: Display image \n");
@@ -31,10 +34,13 @@ int main() {
 		
 		switch (choice) {
 			case 1: 
-				load_image();
+				printf("What is the photo files name?\n\n");
+				printf("Put the name here: ");
+				scanf("%s",filename);
+				load_image(filename, image, &rows, &cols);
 				break;
 			case 2:
-				display_image();
+				display_image(image, &rows, &cols);
 				break;
 			case 3: 
 				edit_image();
@@ -50,38 +56,67 @@ int main() {
 		return 0;
 	}
 	
-	void load_image() {
-		char filename[100];
-		printf("What is the photo files name?\n\n");
-		printf("Put the name here: ");
-		scanf("%s",filename);
+	void load_image(char filename[], char image[][MAX_SIZE], int *rows, int *cols) {
 		
 		FILE *file = fopen(filename, "r");
 		if (file == NULL){
-			printf("Unable to open image");
+			printf("Unable to open image,\n");
 			return;
 		}
-		
-		fscanf(file,"%d %d", &rows, &cols);
-		for(int i =0; i<rows; i++){
-			for(int j=0; j<cols; j++){
-				fscanf(file,"%d", &image[i][j]);
+		else{
+			*rows = *cols = 0; 
+	    		
+	    		int row = 0, col = 0, maxc = 0;
+
+	   		while (fscanf(file,"%c", &image[row][col]) == 1){
+	  
+	   			if(image[row][col] == '\n'){
+	   			row++;
+	   			maxc = col;
+	   			col = 0;
+	   			}
+	   		else{
+	   			col++;
+	   		}
+	   			
+	   		*rows = row;
+	   		*cols = maxc;
 			}
 		}
+
 		
+
 		fclose(file);
 		printf("Image has been loaded\n");
-		
+		return;
 	}
 	
-	void display_image() {
-	
+	void display_image(char image[][MAX_SIZE], int *rows, int *cols) {
 		printf("Displaying Image!\n");
-		fscanf(file, "%ls %ls", &rows, &cols);
-		for(int i = 0; i < rows; i++){
-			for(int j = 0; j < cols; j++){
-				printf(file,"%ls", &image[i][j]);
+		for(int i = 0; i < *rows; i++){
+			for(int j = 0; j < *cols; j++){
+				switch (image[i][j]){
+					case 0:
+						printf(" ");
+						break;
+					case 1:
+						printf(".");
+						break;
+					case 2:
+						printf("o");
+						break;
+					case 3:
+						printf("O");
+						break;
+					case 4:
+						printf("0");
+						break;
+					default:
+						printf("?");
+						break;
+				}
 			}
+			printf("\n");
 		}
 	}
 	void edit_image() {
