@@ -65,13 +65,13 @@ int main() {
 		}
 		else{
 			*rows = *cols = 0; 
-	    		int row = 0, col = 0, maxc = 0;
+	    		int row = 0, col = 0, maxCol = 0;
 
 	   		while (fscanf(file,"%c", &image[row][col]) == 1){
 	  
 	   			if(image[row][col] == '\n'){
 	   			row++;
-	   			maxc = col;
+	   			maxCol = col;
 	   			col = 0;
 	   			}
 	   		else{
@@ -79,7 +79,7 @@ int main() {
 	   		}
 	   			
 	   		*rows = row;
-	   		*cols = maxc;
+	   		*cols = maxCol;
 			}
 		}
 
@@ -231,7 +231,7 @@ int main() {
 	void brighten_image() {
 		for (int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++){
-				if(image[i][j] < 4){
+				if(image[i][j] < '4'){
 				image[i][j] ++;
 				}
 			switch (image[i][j]) {
