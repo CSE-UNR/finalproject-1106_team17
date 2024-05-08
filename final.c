@@ -57,31 +57,27 @@ int main() {
 	}
 	
 	void load_image(char filename[], char image[][MAX_SIZE], int *rows, int *cols) {
-		
+		int row = 0, col = 0, newCol = 0;
+		*rows = *cols;
+		*cols = 0;
 		FILE *file = fopen(filename, "r");
 		if (file == NULL){
 			printf("Unable to open image,\n");
 			return;
 		}
-		else{
-			*rows = *cols = 0; 
-	    		int row = 0, col = 0, maxCol = 0;
 
 	   		while (fscanf(file,"%c", &image[row][col]) == 1){
-	  
 	   			if(image[row][col] == '\n'){
 	   			row++;
-	   			maxCol = col;
+	   			newCol = col;
 	   			col = 0;
 	   			}
-	   		else{
-	   			col++;
-	   		}
-	   			
-	   		*rows = row;
-	   		*cols = maxCol;
+	   				else{
+	   				col++;
+	   				}
+	   				*rows = row;
+					*cols = newCol;
 			}
-		}
 
 		
 
