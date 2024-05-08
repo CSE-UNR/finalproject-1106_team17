@@ -153,14 +153,33 @@ int main() {
 	}
 	
 	void crop_image() {
-		printf("cropping image\n\n");
+		void crop_image(int x, int y, int width, int height) {
+		if (x < 0 ||y < 0 || width <= 0 || height <= 0 || x + width > cols || y + height > rows){
+		printf("invalid crop parameters.\n");
+	return;
+	}
+	char cropped_image[MAX_SIZE][MAX_SIZE];
+	for (int i = y; i < y + height; i++){
+		for(int j = x; j < x + width; j++){
+		cropped_image[i-y][j-x] = image[i][j];
+		}
+	}
+	rows = height;
+	cols = width;
+	for (int i = 0; i < rows; i++){
+		for (int j = 0; i < rows; j++){
+		image[i][j] = cropped_image[i][j];
+		}
+	}
+}
+
 		}
 		
 	void dim_image() {
 		for (int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++){
 				if(image[i][j] < 0){
-				image[i][j]--;
+				image[i][j] - 1;
 				}
 			}
 		}
@@ -170,7 +189,7 @@ int main() {
 		for (int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++){
 				if(image[i][j] < 4){
-				image[i][j]++;
+				image[i][j] + 1;
 				}
 			}
 		}
