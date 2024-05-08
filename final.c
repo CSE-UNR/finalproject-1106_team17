@@ -132,8 +132,17 @@ int main() {
 			
 		switch (choice) {
 			case 1: 
-				crop_image();
-				break;
+				int left, right, top, bottom;
+				printf("Enter the new left side column: ");
+				scanf("%d", &left);
+				printf("Enter the new right side column: ");
+				scanf("%d", &right);
+				printf("Enter the new top row: ");
+				scanf("%d", &top);
+				printf("Enter the new bottom row: ");
+				scanf("%d", &bottom);
+				crop_image(left, right, top, bottom);
+                		break;
 			case 2:
 				dim_image();
 				break;
@@ -152,48 +161,103 @@ int main() {
 		
 	}
 	
-	void crop_image() {
-		void crop_image(int x, int y, int width, int height) {
-		if (x < 0 ||y < 0 || width <= 0 || height <= 0 || x + width > cols || y + height > rows){
-		printf("invalid crop parameters.\n");
-	return;
-	}
-	char cropped_image[MAX_SIZE][MAX_SIZE];
-	for (int i = y; i < y + height; i++){
-		for(int j = x; j < x + width; j++){
-		cropped_image[i-y][j-x] = image[i][j];
-		}
-	}
-	rows = height;
-	cols = width;
-	for (int i = 0; i < rows; i++){
-		for (int j = 0; i < rows; j++){
-		image[i][j] = cropped_image[i][j];
-		}
-	}
-}
+	void crop_image(int left, int right, int top, int bottom) {
+    printf("Cropping the image...\n");
 
-		}
+	int i, j;
+	left = (left < 0) ? 0 : left;
+	right = (right >= cols) ? cols - 1 : right;
+	top = (top < 0) ? 0 : top;
+	bottom = (bottom >= rows) ? rows - 1 : bottom;
+
+	for ( i = top; i <= bottom; i++) {
+		for ( j = left; j <= right; j++) {
+            switch (image[i][j]) {
+                case '0':
+                    printf(" ");
+                    break;
+                case '1':
+                    printf(".");
+                    break;
+                case '2':
+                    printf("o");
+                    break;
+                case '3':
+                    printf("O");
+                    break;
+                case '4':
+                    printf("0");
+                    break;
+                default:
+                    printf("?");
+                    break;
+            }
+        }
+        printf("\n");
+    }
+}
 		
 	void dim_image() {
 		for (int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++){
-				if(image[i][j] < 0){
-				image[i][j] - 1;
+				if(image[i][j] > 0){
+				image[i][j] --;
 				}
-			}
-		}
-	}
+			switch (image[i][j]) {
+                case '0':
+                    printf(" ");
+                    break;
+                case '1':
+                    printf(".");
+                    break;
+                case '2':
+                    printf("o");
+                    break;
+                case '3':
+                    printf("O");
+                    break;
+                case '4':
+                    printf("0");
+                    break;
+                default:
+                    printf(" ");
+                    break;
+            }
+        }
+        printf("\n");
+    }
+}
 		
 	void brighten_image() {
 		for (int i = 0; i < rows; i++){
 			for(int j = 0; j < cols; j++){
 				if(image[i][j] < 4){
-				image[i][j] + 1;
+				image[i][j] ++;
 				}
-			}
-		}
-	}
+			switch (image[i][j]) {
+                case '0':
+                    printf(" ");
+                    break;
+                case '1':
+                    printf(".");
+                    break;
+                case '2':
+                    printf("o");
+                    break;
+                case '3':
+                    printf("O");
+                    break;
+                case '4':
+                    printf("0");
+                    break;
+                default:
+                    printf("0");
+                    break;
+            }
+        }
+        printf("\n");
+    }
+}
 	void save_image(){
 	char filename[100];
 	printf("Enter filename of photo to save.");
